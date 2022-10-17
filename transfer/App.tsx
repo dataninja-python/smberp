@@ -1,24 +1,24 @@
-import React from "react";
-import "./assets/norm.css";
-import "./assets/base.css";
+import React from "react"
+import './assets/norm.css'
+//import './assets/base.css'
 
-import { FormEvent, useState } from "react";
-import { AccountForm } from "./AccountForm";
-import { AddressForm } from "./AddressForm";
-import { useMultistepForm } from "./useMultistepForm";
-import { UserForm } from "./UserForm";
+import { FormEvent, useState } from "react"
+import { AccountForm } from "./AccountForm"
+import { AddressForm } from "./AddressForm"
+import { useMultistepForm } from "./useMultistepForm"
+import { UserForm } from "./UserForm"
 
 type FormData = {
-  firstName: string;
-  lastName: string;
-  age: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-  email: string;
-  password: string;
-};
+  firstName: string
+  lastName: string
+  age: string
+  street: string
+  city: string
+  state: string
+  zip: string
+  email: string
+  password: string
+}
 
 const INITIAL_DATA: FormData = {
   firstName: "",
@@ -30,26 +30,26 @@ const INITIAL_DATA: FormData = {
   zip: "",
   email: "",
   password: "",
-};
+}
 
 function App() {
-  const [data, setData] = useState(INITIAL_DATA);
+  const [data, setData] = useState(INITIAL_DATA)
   function updateFields(fields: Partial<FormData>) {
-    setData((prev) => {
-      return { ...prev, ...fields };
-    });
+    setData(prev => {
+      return { ...prev, ...fields }
+    })
   }
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm([
       <UserForm {...data} updateFields={updateFields} />,
       <AddressForm {...data} updateFields={updateFields} />,
       <AccountForm {...data} updateFields={updateFields} />,
-    ]);
+    ])
 
   function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!isLastStep) return next();
-    alert("Successful Account Creation");
+    e.preventDefault()
+    if (!isLastStep) return next()
+    alert("Successful Account Creation")
   }
 
   return (
@@ -57,9 +57,7 @@ function App() {
       <form onSubmit={onSubmit}>
         <div className="row">
           <div className="twelve columns"></div>
-          <div className="one column">
-            {currentStepIndex + 1} / {steps.length}
-          </div>
+            <div className="one column">{currentStepIndex + 1} / {steps.length}</div>
         </div>
         {step}
         <div>
@@ -72,7 +70,7 @@ function App() {
         </div>
       </form>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
