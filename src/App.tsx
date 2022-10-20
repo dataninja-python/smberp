@@ -1,6 +1,6 @@
 import React from "react";
-import "./assets/norm.css";
-import "./assets/base.css";
+import "./assets/css/norm.css";
+import "./assets/css/base.css";
 
 import { FormEvent, useState } from "react";
 import { AccountForm } from "./AccountForm";
@@ -54,23 +54,43 @@ function App() {
 
   return (
     <div className="container grid">
-      <form onSubmit={onSubmit}>
-        <div className="row">
-          <div className="twelve columns"></div>
-          <div className="one column">
-            {currentStepIndex + 1} / {steps.length}
-          </div>
+      <div className="row">
+        <div className="twelve columns">
+          <form onSubmit={onSubmit}>
+            <div className="row">
+              <div className="ten columns">
+                <span style={{ color: "white" }}>asdlkfjl</span>
+              </div>
+              <div className="one column">
+                <span style={{ color: "black", font: "bold" }}>
+                  {currentStepIndex + 1}
+                </span>{" "}
+                / <span>{steps.length}</span>
+              </div>
+            </div>
+            {step}
+            <div className="row">
+              <div className="nine columns">
+                <span style={{ color: "white" }}>aslfjal</span>
+              </div>
+              <div>
+                <span style={{ margin: "0 0.5rem" }}>
+                  {!isFirstStep && (
+                    <button type="button" onClick={back}>
+                      Back
+                    </button>
+                  )}
+                </span>
+                <span style={{ margin: "0 0.5rem" }}>
+                  <button type="submit">
+                    {isLastStep ? "Finish" : "Next"}
+                  </button>
+                </span>
+              </div>
+            </div>
+          </form>
         </div>
-        {step}
-        <div>
-          {!isFirstStep && (
-            <button type="button" onClick={back}>
-              Back
-            </button>
-          )}
-          <button type="submit">{isLastStep ? "Finish" : "Next"}</button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 }
