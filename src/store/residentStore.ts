@@ -1,12 +1,12 @@
 import create from "zustand";
-
+import { RandomUUIDOptions } from "crypto";
 import { devtools, persist } from "zustand/middleware";
 
 interface GenderPronouns {
   pronouns: "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Zir/Zirs";
 }
 
-interface ResidentProps {
+interface GuestProps {
   id: number;
   firstName: string;
   lastName: string;
@@ -30,7 +30,7 @@ interface ResidentProps {
   modifiedByFrontend: string | Date;
 }
 
-const initResidents = [
+const initGuests = [
   {
     id: 0,
     firstName: "John",
@@ -105,7 +105,7 @@ const initResidents = [
   },
 ];
 
-const initResidentData = [initResidents];
+const initGuestData = [initGuests];
 
 export const programTestData = [
   "Program #1",
@@ -116,7 +116,7 @@ export const programTestData = [
 
 export const userTestData = ["User #1", "User #2"];
 
-const residentFormQuestions = {
+const guestFormQuestions = {
   id: 0,
   firstName: "First Name",
   lastName: "Last Name",
@@ -141,29 +141,48 @@ const residentFormQuestions = {
   modifiedByFront: "",
 };
 
-function highestNumber(residents: ResidentProps[]) {
+function highestNumber(guests: GuestProps[]) {
   let high = 0;
-  for (const res of residents) {
-    if (res.id < 0) {
+  for (const ges of guests) {
+    if (ges.id < 0) {
       return 0;
     }
-    if (res.id > high) {
-      high = res.id;
+    if (ges.id > high) {
+      high = ges.id;
     }
   }
   return high;
 }
 
-function AddResident(residents: ResidentProps[], resident: ResidentProps) {
-  let workingResident = resident;
+const guest = [];
+
+// Add a guest
+function AddGuest(guests: GuestProps[], guest: GuestProps) {
+  let workingGuest = guest;
+  let outputGuest = {};
   // get the current highest id
-  let newId = highestNumber(residents);
+  let newId = highestNumber(guests);
   // create the new resident with the highest id and all rest of stuff getting passed in
-  workingResident = { ...workingResident, id: newId };
+  workingGuest = {...workingGuest, id: newId };
   // combine old residents and old residents into new array
-  residents = { ...residents, ...workingResident };
+  guests = { ...guests, ...workingGuest };
 }
+
 // function UpdateResident(residents: ResidentProps[], id: number) {}
-function RemoveResident(residents: ResidentProps[], id: number) {
+function UpdateGuest(residents: GuestProps[], id: number, edits: {}) {
+  const newGuest = residents.map( (resident) => {
+    if (resident.id === id) {
+      return {...resident, ...edits};
+    }
+    return resident;
+  }
+  );
+}
+
+
+// remove a guest
+function RemoveGuest(residents: GuestProps[], id: number) {
   residents.filter((resident) => resident.id !== id);
 }
+
+
