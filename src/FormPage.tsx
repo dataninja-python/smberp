@@ -7,6 +7,35 @@ import { AccountForm } from "./AccountForm";
 import { AddressForm } from "./AddressForm";
 import { useMultistepForm } from "./useMultistepForm";
 import { UserForm } from "./UserForm";
+import { isTemplateExpression } from "typescript";
+
+interface GenderPronouns {
+  pronouns: "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Zir/Zirs";
+}
+
+interface GuestProps {
+  id: number;
+  firstName: string;
+  lastName: string;
+  mobile: string | number;
+  email: string;
+  nickName: string;
+  pronouns: GenderPronouns;
+  birthdate: string | Date;
+  program: string;
+  caseManagerName: string;
+  caseManagerMobile: string | number;
+  caseManagerEmail: string;
+  caseManagerWorkPhone: string | number;
+  emergencyContactName: string;
+  emergencyContactMobile: string | number;
+  emergencyContactEmail: string;
+  emergencyContactWorkPhone: string | number;
+  createdDateFrontend: string | Date;
+  createByFrontend: string | number;
+  lastModifiedDateFrontend: string | Date;
+  modifiedByFrontend: string | Date;
+}
 
 type FormData = {
   firstName: string;
@@ -31,6 +60,20 @@ const INITIAL_DATA: FormData = {
   email: "",
   password: "",
 }
+
+function nextId(arr: []) {
+  let high = 0
+  for obj of arr {
+    if (obj.id < 0) {
+      return 0
+    }
+    if (obj.id > high) {
+      high = obj.id
+    }
+  }
+  return high + 1
+}
+
 
 function FormPage() {
   const [data, setData] = useState(INITIAL_DATA);
@@ -65,12 +108,14 @@ function FormPage() {
                 / <span>{steps.length}</span>
               </div>
             </div>
+            <div className="container">
             {step}
+            </div>
             <div className="row">
-              <div className="nine columns">
+              <div className="eight columns">
                 <span style={{ color: "white" }}>aslfjal</span>
               </div>
-              <div>
+              <div className="three columns">
                 <span style={{ margin: "0 0.5rem" }}>
                   {!isFirstStep && (
                     <button type="button" onClick={back}>

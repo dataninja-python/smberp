@@ -1,23 +1,23 @@
 import { FormWrapper } from "./FormWrapper"
 
-type GuestData = {
+type Guest1Data = {
   firstName: string,
   lastName: string,
   mobile: string,
   email: string,
 }
 
-type GuestFormProps = GuestData & {
-  updateFields: (fields: Partial<GuestData>) => void
+type Guest1FormProps = Guest1Data & {
+  updateFields: (fields: Partial<Guest1Data>) => void
 }
 
-export function GuestForm({
+export function GuestForm1({
   firstName,
   lastName,
   mobile,
   email,
   updateFields,
-}: UserFormProps) {
+}: Guest1FormProps) {
   return (
     <FormWrapper title="User Details">
       <label>First Name</label>
@@ -35,13 +35,18 @@ export function GuestForm({
         value={lastName}
         onChange={e => updateFields({ lastName: e.target.value })}
       />
-      <label>Age</label>
+      <label>Mobile</label>
       <input
         required
-        min={1}
-        type="number"
-        value={age}
-        onChange={e => updateFields({ age: e.target.value })}
+        type="text"
+        value={mobile}
+        onChange={e => updateFields({ mobile: e.target.value })}
+      />
+      <label>email</label>
+      <input
+        type="text"
+        value={email}
+        onChange={e => updateFields({ email: e.target.value })}
       />
     </FormWrapper>
   )
