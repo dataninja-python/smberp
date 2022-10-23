@@ -9,6 +9,12 @@ import { useMultistepForm } from "./useMultistepForm";
 import { UserForm } from "./UserForm";
 import { isTemplateExpression } from "typescript";
 
+import { useMultistepFormGuest } from "./useMultistepFormGuest";
+import { GuestForm1 } from "./GuestForm1";
+import { GuestForm2 } from "./GuestForm2";
+import { CaseManagerForm } from "./CaseManagerForm";
+import { EmergencyContactForm } from "./EmergencyContactForm";
+
 interface GenderPronouns {
   pronouns: "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Zir/Zirs";
 }
@@ -17,24 +23,25 @@ interface GuestProps {
   id: number;
   firstName: string;
   lastName: string;
-  mobile: string | number;
+  mobile: string;
   email: string;
   nickName: string;
-  pronouns: GenderPronouns;
-  birthdate: string | Date;
+  gender: string;
+  genderPronouns: string;
+  birthdate: any;
   program: string;
   caseManagerName: string;
-  caseManagerMobile: string | number;
+  caseManagerMobile: string;
   caseManagerEmail: string;
-  caseManagerWorkPhone: string | number;
+  caseManagerWorkPhone: string;
   emergencyContactName: string;
-  emergencyContactMobile: string | number;
+  emergencyContactMobile: string;
   emergencyContactEmail: string;
-  emergencyContactWorkPhone: string | number;
-  createdDateFrontend: string | Date;
-  createByFrontend: string | number;
-  lastModifiedDateFrontend: string | Date;
-  modifiedByFrontend: string | Date;
+  emergencyContactWorkPhone: string;
+  createdDateFrontend: any;
+  createByFrontend: string;
+  lastModifiedDateFrontend: any;
+  modifiedByFrontend: any;
 }
 
 type FormData = {
@@ -61,6 +68,31 @@ const INITIAL_DATA: FormData = {
   password: "",
 }
 
+const sampleGuest = {
+  id: -1,
+  firstName: "",
+  lastName: "",
+  mobile: "",
+  email: "",
+  nickName: "",
+  pronouns: "",
+  gender: "",
+  birthdate: "",
+  program: "",
+  caseManagerName: "",
+  caseManagerMobile: "",
+  caseManagerEmail: "",
+  caseManagerWorkPhone: "",
+  emergencyContactName: "",
+  emergencyContactMobile: "",
+  emergencyContactEmail: "",
+  emergencyContactWorkPhone: "",
+  createdDateFront: "",
+  createByFront: "",
+  lastModifiedDateFront: "",
+  modifiedByFront: "",
+}
+
 function nextId(arr: []) {
   let high = 0
   for obj of arr {
@@ -74,19 +106,19 @@ function nextId(arr: []) {
   return high + 1
 }
 
-
 function FormPage() {
-  const [data, setData] = useState(INITIAL_DATA);
-  function updateFields(fields: Partial<FormData>) {
+  const [data, setData] = useState(sampleGuest);
+  function updateFields(fields: Partial<GuestProps>) {
     setData((prev) => {
       return { ...prev, ...fields };
     });
   }
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm([
-      <UserForm {...data} updateFields={updateFields} />,
-      <AddressForm {...data} updateFields={updateFields} />,
-      <AccountForm {...data} updateFields={updateFields} />,
+      <GuestForm1 {...data} updateFields={updateFields} />,
+      <GuestForm2 {...data} updateFields={updateFields} />,
+      <CaseManagerForm {...data} updateFields={updateFields} />,
+      <EmergencyContactForm {...data} updateFields={updateFields} />,
     ]);
 
   function onSubmit(e: FormEvent) {

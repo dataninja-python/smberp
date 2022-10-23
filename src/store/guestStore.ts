@@ -151,38 +151,67 @@ function highestNumber(guests: GuestProps[]) {
       high = ges.id;
     }
   }
-  return high;
+  return high + 1;
 }
 
-const guest = [];
+const sampleGuest = {
+  id: -1,
+  firstName: "",
+  lastName: "",
+  mobile: "",
+  email: "",
+  nickName: "",
+  pronouns: "",
+  gender: "",
+  birthdate: "",
+  program: "",
+  caseManagerName: "",
+  caseManagerMobile: "",
+  caseManagerEmail: "",
+  caseManagerWorkPhone: "",
+  emergencyContactName: "",
+  emergencyContactMobile: "",
+  emergencyContactEmail: "",
+  emergencyContactWorkPhone: "",
+  createdDateFront: "",
+  createByFront: "",
+  lastModifiedDateFront: "",
+  modifiedByFront: "",
+}
 
 // Add a guest
-function AddGuest(guests: GuestProps[], guest: GuestProps) {
-  let workingGuest = guest;
-  let outputGuest = {};
+function makeNewGuest(guests: GuestProps[]) {
   // get the current highest id
   let newId = highestNumber(guests);
   // create the new resident with the highest id and all rest of stuff getting passed in
-  workingGuest = {...workingGuest, id: newId };
-  // combine old residents and old residents into new array
-  guests = { ...guests, ...workingGuest };
+  const outputGuest = {...sampleGuest, id: newId };
+  // combine old guests and new guest into new array
+  const outGuests = { ...guests, ...outputGuest };
+  return outGuests;
 }
 
 // function UpdateResident(residents: ResidentProps[], id: number) {}
-function UpdateGuest(residents: GuestProps[], id: number, edits: {}) {
-  const newGuest = residents.map( (resident) => {
-    if (resident.id === id) {
-      return {...resident, ...edits};
+function updateGuestInfo(guests: GuestProps[], id: number, edits: {}) {
+  const newGuest = guests.map( (guest) => {
+    if (guest.id === id) {
+      const updatedGuest = {...guest, ...edits};
+      guests = { ...guests, ...updatedGuest };
     }
-    return resident;
-  }
-  );
+  });
+  return guests;
 }
-
 
 // remove a guest
-function RemoveGuest(residents: GuestProps[], id: number) {
+function removeGuestInfo(residents: GuestProps[], id: number) {
   residents.filter((resident) => resident.id !== id);
+  return residents;
 }
 
+const useGuestStore = create((set) => ({
+  guests: [],
+  addGuest: (guests: GuestProps[]) => set((state: any) => ({ guests: state.addGuest(guests) })),
+  updateGuest: () => set(),
+  removeGuest: () => set(),
+}));
 
+export default useGuestStore;

@@ -8,8 +8,33 @@ type Guest2Data = {
   birthdate: string,
 }
 
-type Guest2FormProps = Guest2Data & {
-  updateFields: (fields: Partial<Guest2Data>) => void
+interface GuestProps {
+  id: number;
+  firstName: string;
+  lastName: string;
+  mobile: string | number;
+  email: string;
+  nickName: string;
+  gender: string;
+  genderPronouns: string;
+  birthdate: string | any;
+  program: string;
+  caseManagerName: string;
+  caseManagerMobile: string | number;
+  caseManagerEmail: string;
+  caseManagerWorkPhone: string | number;
+  emergencyContactName: string;
+  emergencyContactMobile: string | number;
+  emergencyContactEmail: string;
+  emergencyContactWorkPhone: string | number;
+  createdDateFrontend: string | Date;
+  createByFrontend: string | number;
+  lastModifiedDateFrontend: string | Date;
+  modifiedByFrontend: string | Date;
+}
+
+type Guest2FormProps = GuestProps & {
+  updateFields: (fields: Partial<GuestProps>) => void
 }
 export function GuestForm2({
   nickName,
