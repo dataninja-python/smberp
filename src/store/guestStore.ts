@@ -145,10 +145,10 @@ const useGuestStore = create(set => ({
         ...state.guests,
         {
           gId: self.crypto.randomUUID(),
-          page1: { ...guest.page1 },
-          page2: { ...guest.page2 },
-          page3: { ...guest.page3 },
-          page4: { ...guest.page4 },
+          page1: { ...state.page1 },
+          page2: { ...state.page2 },
+          page3: { ...state.page3 },
+          page4: { ...state.page4 },
           extraInfo: { 
             createdDateFrontend: Date.now(),
             createdByFrontend: "AJ",
@@ -171,8 +171,10 @@ const useGuestStore = create(set => ({
           return guest
         }
       })),
-    }))
+    })),
+    removeGuest: (id: any) => set((state:any) => ({
+      guests: state.guests.filter((guest:any) => guest.id !== id)
+    })),
 }));
-
 
 export default useGuestStore
