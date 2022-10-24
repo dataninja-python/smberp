@@ -7,10 +7,10 @@ type GenderPronouns = "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Z
 
 interface GuestPageProps {
   gId: string;
-  page1: {},
-  page2: {},
-  page3: {},
-  page4: {},
+  page1: {};
+  page2: {};
+  page3: {};
+  page4: {};
   createdDateFrontend: any;
   createByFrontend: any;
   lastModifiedDateFrontend: any;
@@ -98,7 +98,6 @@ const guestQuestions = {
   modifiedByFrontend: "Modified By Frontend",
 }
 
-
 const genderPronouns = [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ]
 
 const useGuestStore = create(set => ({
@@ -139,9 +138,27 @@ const useGuestStore = create(set => ({
     lastModifiedDateFrontend: "Last Modified Date Frontend",
     modifiedByFrontend: "Modified By Frontend",
   },
-  _getId: self.crypto.randomUUID,
-  _timeNow: () => { return Date.now() },
   userNow: "AJ",
+  createGuest: (guest: any) => set(
+    (state: any) => ({
+      guests: [
+        ...state.guests,
+        {
+          gId: self.crypto.randomUUID(),
+          page1: { ...guest.page1 },
+          page2: { ...guest.page2 },
+          page3: { ...guest.page3 },
+          page4: { ...guest.page4 },
+          extraInfo: { 
+            createdDateFrontend: Date.now(),
+            createdByFrontend: "AJ",
+            lastModifiedDateFrontend: Date.now(),
+            modifiedByFrontend: "AJ",
+          },
+        }
+      ]
+    })),
+    
 }));
 
 
