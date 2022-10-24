@@ -1,6 +1,7 @@
 import create from "zustand";
-import { RandomUUIDOptions } from "crypto";
+import { getDiffieHellman, RandomUUIDOptions } from "crypto";
 import { devtools, persist } from "zustand/middleware";
+import { isMatchWith } from "lodash";
 
 // note: see typescript string literal types
 type GenderPronouns = "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Zir/Zirs";
@@ -11,10 +12,7 @@ interface GuestPageProps {
   page2: {};
   page3: {};
   page4: {};
-  createdDateFrontend: any;
-  createByFrontend: any;
-  lastModifiedDateFrontend: any;
-  modifiedByFrontend: any;
+  extraInfo: {};
 }
 
 interface Page1Props {
@@ -102,6 +100,8 @@ const genderPronouns = [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Z
 
 const useGuestStore = create(set => ({
   guests: [],
+  activeGuestId: "",
+  start: 0,
   gPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
   page1: {
     isLast: false,
@@ -158,7 +158,20 @@ const useGuestStore = create(set => ({
         }
       ]
     })),
-    
+    updateGuest: (id: any) => set((state:any) => ({
+      guests: state.guests.map(((guest: any) => {
+        if(id === guest.id) {
+          return {
+            ...guest,
+            lastModifiedDateFrontend: Date.now(),
+            modifiedByFrontend: "AJ",
+            gId: guest.id
+          }
+        } else {
+          return guest
+        }
+      })),
+    }))
 }));
 
 
