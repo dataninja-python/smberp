@@ -98,7 +98,7 @@ const guestQuestions = {
 
 const genderPronouns = [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ]
 
-const useGuestStore = create(set => ({
+const useGuestStore = create((set: any) => ({
   guests: [],
   activeGuestId: "",
   start: 0,
