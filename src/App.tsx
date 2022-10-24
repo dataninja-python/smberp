@@ -7,7 +7,6 @@ import { AccountForm } from "./AccountForm";
 import { AddressForm } from "./AddressForm";
 import { useMultistepForm } from "./useMultistepForm";
 import { UserForm } from "./UserForm";
-import FormPage from './FormPage';
 
 
 type FormData = {
@@ -93,7 +92,6 @@ function App() {
           </form>
         </div>
       </div>
-      <FormPage />
     </div>
   );
 }
