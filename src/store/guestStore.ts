@@ -2,167 +2,61 @@ import create from "zustand";
 import { RandomUUIDOptions } from "crypto";
 import { devtools, persist } from "zustand/middleware";
 
-interface GenderPronouns {
-  pronouns: "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Zir/Zirs";
+// note: see typescript string literal types
+type GenderPronouns = "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Zir/Zirs";
+
+interface GuestPageProps {
+  gId: string;
+  page1: {},
+  page2: {},
+  page3: {},
+  page4: {},
+  createdDateFrontend: any;
+  createByFrontend: any;
+  lastModifiedDateFrontend: any;
+  modifiedByFrontend: any;
 }
 
-interface GuestProps {
-  id: number;
+interface Page1Props {
+  isFirst: boolean;
   firstName: string;
   lastName: string;
-  mobile: string | number;
+  mobile: string;
   email: string;
+}
+
+interface Page2Props {
   nickName: string;
-  pronouns: GenderPronouns;
-  birthdate: string | Date;
+  gender: string;
+  genderPronouns: GenderPronouns;
+  birthdate: any;
+}
+
+interface Page3Props {
   program: string;
   caseManagerName: string;
-  caseManagerMobile: string | number;
+  caseManagerMobile: string;
   caseManagerEmail: string;
-  caseManagerWorkPhone: string | number;
+  caseManagerWorkPhone: string;
+}
+
+interface Page4Props {
+  isLast: boolean;
   emergencyContactName: string;
-  emergencyContactMobile: string | number;
+  emergencyContactMobile: string;
   emergencyContactEmail: string;
-  emergencyContactWorkPhone: string | number;
-  createdDateFrontend: string | Date;
-  createByFrontend: string | number;
-  lastModifiedDateFrontend: string | Date;
-  modifiedByFrontend: string | Date;
+  emergencyContactWorkPhone: string;
 }
 
-const initGuests = [
-  {
-    id: 0,
-    firstName: "John",
-    lastName: "James",
-    mobile: "4986741829",
-    email: "slkjfdaf@gmail.com",
-    nickName: "jj",
-    pronouns: "He/Him/His",
-    gender: "Male",
-    birthdate: "3/15/1985",
-    program: "Program #2",
-    caseManagerName: "Susan Summers",
-    caseManagerMobile: "4441234567",
-    caseManagerEmail: "ldsafj@gmail.com",
-    caseManagerWorkPhone: "4441234567",
-    emergencyContactName: "Diane Summers",
-    emergencyContactMobile: "1231234567",
-    emergencyContactEmail: "kldadjf@email.com",
-    emergencyContactWorkPhone: "3431234567",
-    createdDateFront: "8/10/2022",
-    createByFront: "Jane Doe",
-    lastModifiedDateFront: "8/10/22",
-    modifiedByFront: "Jane Doe",
-  },
-  {
-    id: 1,
-    firstName: "John2",
-    lastName: "James",
-    mobile: "4986741829",
-    email: "slkjfdaf@gmail.com",
-    nickName: "jj",
-    pronouns: "He/Him/His",
-    gender: "Male",
-    birthdate: "3/15/1985",
-    program: "Program #2",
-    caseManagerName: "Susan Summers",
-    caseManagerMobile: "4441234567",
-    caseManagerEmail: "ldsafj@gmail.com",
-    caseManagerWorkPhone: "4441234567",
-    emergencyContactName: "Diane Summers",
-    emergencyContactMobile: "1231234567",
-    emergencyContactEmail: "kldadjf@email.com",
-    emergencyContactWorkPhone: "3431234567",
-    createdDateFront: "8/10/2022",
-    createByFront: "Jane Doe",
-    lastModifiedDateFront: "8/10/22",
-    modifiedByFront: "Jane Doe",
-  },
-  {
-    id: 2,
-    firstName: "John3",
-    lastName: "James",
-    mobile: "4986741829",
-    email: "slkjfdaf@gmail.com",
-    nickName: "jj",
-    pronouns: "He/Him/His",
-    gender: "Male",
-    birthdate: "3/15/1985",
-    program: "Program #2",
-    caseManagerName: "Susan Summers",
-    caseManagerMobile: "4441234567",
-    caseManagerEmail: "ldsafj@gmail.com",
-    caseManagerWorkPhone: "4441234567",
-    emergencyContactName: "Diane Summers",
-    emergencyContactMobile: "1231234567",
-    emergencyContactEmail: "kldadjf@email.com",
-    emergencyContactWorkPhone: "3431234567",
-    createdDateFront: "8/10/2022",
-    createByFront: "Jane Doe",
-    lastModifiedDateFront: "8/10/22",
-    modifiedByFront: "Jane Doe",
-  },
-];
-
-const initGuestData = [initGuests];
-
-export const programTestData = [
-  "Program #1",
-  "Program #2",
-  "Program #3",
-  "Program #4",
-];
-
-export const userTestData = ["User #1", "User #2"];
-
-const guestFormQuestions = {
-  id: 0,
-  firstName: "First Name",
-  lastName: "Last Name",
-  mobile: "Mobile Number",
-  email: "Email Address",
-  nickName: "Nickname",
-  pronouns: "Gender Pronouns",
-  gender: "Gender",
-  birthdate: "Birthdate",
-  program: "Program",
-  caseManagerName: "Case Manager",
-  caseManagerMobile: "Case Manager Mobile",
-  caseManagerEmail: "Case Manager Email",
-  caseManagerWorkPhone: "Case Manager Work Phone",
-  emergencyContactName: "Emergency Contact",
-  emergencyContactMobile: "Emergency Contact Mobile",
-  emergencyContactEmail: "Emergency Contact Email",
-  emergencyContactWorkPhone: "Emergency Contact Work Phone",
-  createdDateFront: "",
-  createByFront: "",
-  lastModifiedDateFront: "",
-  modifiedByFront: "",
-};
-
-function highestNumber(guests: GuestProps[]) {
-  let high = 0;
-  for (const ges of guests) {
-    if (ges.id < 0) {
-      return 0;
-    }
-    if (ges.id > high) {
-      high = ges.id;
-    }
-  }
-  return high + 1;
-}
-
-const sampleGuest = {
-  id: -1,
+const initGuestData = {
+  gId: "",
   firstName: "",
   lastName: "",
   mobile: "",
   email: "",
   nickName: "",
-  pronouns: "",
   gender: "",
+  genderPronouns: "",
   birthdate: "",
   program: "",
   caseManagerName: "",
@@ -173,45 +67,82 @@ const sampleGuest = {
   emergencyContactMobile: "",
   emergencyContactEmail: "",
   emergencyContactWorkPhone: "",
-  createdDateFront: "",
-  createByFront: "",
-  lastModifiedDateFront: "",
-  modifiedByFront: "",
+  createdDateFrontend: "",
+  createByFrontend: "",
+  lastModifiedDateFrontend: "",
+  modifiedByFrontend: "",
 }
 
-// Add a guest
-function makeNewGuest(guests: GuestProps[]) {
-  // get the current highest id
-  let newId = highestNumber(guests);
-  // create the new resident with the highest id and all rest of stuff getting passed in
-  const outputGuest = {...sampleGuest, id: newId };
-  // combine old guests and new guest into new array
-  const outGuests = { ...guests, ...outputGuest };
-  return outGuests;
+const guestQuestions = {
+  gId: "Guest Id",
+  firstName: "First Name",
+  lastName: "Last Name",
+  mobile: "Mobile Number",
+  email: "Email Address",
+  nickName: "Nick Name",
+  gender: "Gender",
+  genderPronouns: "Gender Pronouns",
+  birthdate: "Birthdate",
+  program: "Program",
+  caseManagerName: "Case Manager Full Name",
+  caseManagerMobile: "Case Manager Mobile",
+  caseManagerEmail: "Case Manager Email Address",
+  caseManagerWorkPhone: "Case Manager Work Phone",
+  emergencyContactName: "Emergency Contact Full Name",
+  emergencyContactMobile: "Emergency Contact Mobile Number",
+  emergencyContactEmail: "Emergency Contact Email Address",
+  emergencyContactWorkPhone: "Emergency Contact Work Phone",
+  createdDateFrontend: "Created Date Frontend",
+  createByFrontend: "Created By Frontend",
+  lastModifiedDateFrontend: "Last Modified Date Frontend",
+  modifiedByFrontend: "Modified By Frontend",
 }
 
-// function UpdateResident(residents: ResidentProps[], id: number) {}
-function updateGuestInfo(guests: GuestProps[], id: number, edits: {}) {
-  const newGuest = guests.map( (guest) => {
-    if (guest.id === id) {
-      const updatedGuest = {...guest, ...edits};
-      guests = { ...guests, ...updatedGuest };
-    }
-  });
-  return guests;
-}
 
-// remove a guest
-function removeGuestInfo(residents: GuestProps[], id: number) {
-  residents.filter((resident) => resident.id !== id);
-  return residents;
-}
+const genderPronouns = [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ]
 
-const useGuestStore = create((set) => ({
+const useGuestStore = create(set => ({
   guests: [],
-  addGuest: (guests: GuestProps[]) => set((state: any) => ({ guests: state.addGuest(guests) })),
-  updateGuest: () => set(),
-  removeGuest: () => set(),
+  gPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
+  page1: {
+    isLast: false,
+    firstName: "First Name",
+    lastName: "Last Name",
+    mobile: "Mobile Number",
+    email: "Email Address",
+  },
+  page2: {
+    isLast: false,
+    nickName: "Nick Name",
+    gender: "Gender",
+    genderPronouns: "Gender Pronouns",
+    birthdate: "Birthdate",
+  },
+  page3: {
+    isLast: false,
+    program: "Program",
+    caseManagerName: "Case Manager Full Name",
+    caseManagerMobile: "Case Manager Mobile",
+    caseManagerEmail: "Case Manager Email Address",
+    caseManagerWorkPhone: "Case Manager Work Phone",
+  },
+  page4: {
+    isLast: true,
+    emergencyContactName: "Emergency Contact Full Name",
+    emergencyContactMobile: "Emergency Contact Mobile Number",
+    emergencyContactEmail: "Emergency Contact Email Address",
+    emergencyContactWorkPhone: "Emergency Contact Work Phone",
+  },
+  extraInfo: {
+    createdDateFrontend: "Created Date Frontend",
+    createdByFrontend: "",
+    lastModifiedDateFrontend: "Last Modified Date Frontend",
+    modifiedByFrontend: "Modified By Frontend",
+  },
+  _getId: self.crypto.randomUUID,
+  _timeNow: () => { return Date.now() },
+  userNow: "AJ",
 }));
 
-export default useGuestStore;
+
+export default useGuestStore
