@@ -105,6 +105,7 @@ const useGuestStore = create(set => ({
   gPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
   page1: {
     isLast: false,
+    pageNum: 1,
     firstName: "First Name",
     lastName: "Last Name",
     mobile: "Mobile Number",
@@ -112,6 +113,7 @@ const useGuestStore = create(set => ({
   },
   page2: {
     isLast: false,
+    pageNum: 2,
     nickName: "Nick Name",
     gender: "Gender",
     genderPronouns: "Gender Pronouns",
@@ -119,6 +121,7 @@ const useGuestStore = create(set => ({
   },
   page3: {
     isLast: false,
+    pageNum: 3,
     program: "Program",
     caseManagerName: "Case Manager Full Name",
     caseManagerMobile: "Case Manager Mobile",
@@ -127,6 +130,7 @@ const useGuestStore = create(set => ({
   },
   page4: {
     isLast: true,
+    pageNum: 4,
     emergencyContactName: "Emergency Contact Full Name",
     emergencyContactMobile: "Emergency Contact Mobile Number",
     emergencyContactEmail: "Emergency Contact Email Address",
