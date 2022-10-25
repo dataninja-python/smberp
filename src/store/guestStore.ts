@@ -101,6 +101,8 @@ const genderPronouns = [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Z
 const useGuestStore = create((set: any) => ({
   guests: [],
   activeGuestId: "",
+  currentPage: 1,
+  maxPages: 4,
   start: 0,
   gPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
   page1: {
@@ -179,6 +181,13 @@ const useGuestStore = create((set: any) => ({
     removeGuest: (id: any) => set((state:any) => ({
       guests: state.guests.filter((guest:any) => guest.id !== id)
     })),
+    nextPage: () => set((state: any) => ({
+      currentPage: Math.min(state.currentPage + 1, state.maxPages)
+    } )),
+    prevPage: () => set((state: any) => ({
+      currentPage: Math.max(state.currentPage - 1, 1)
+    })),
+    resetForm: () => set({ currentPage: 1 })
 }));
 
 export default useGuestStore
