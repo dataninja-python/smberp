@@ -1,7 +1,6 @@
 import create from "zustand";
-import { getDiffieHellman, RandomUUIDOptions } from "crypto";
 import { devtools, persist } from "zustand/middleware";
-import { isMatchWith } from "lodash";
+import { v4 as uuidv4 } from 'uuid';
 
 // note: see typescript string literal types
 type GenderPronouns = "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Zir/Zirs";
@@ -96,107 +95,39 @@ const guestQuestions = {
   modifiedByFrontend: "Modified By Frontend",
 }
 
-const genderPronouns = [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ]
+const genderPronouns = ["She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs"]
 
-let useGuestStore: any = create((set: any) => ({
+
+
+let useGuestStore: any = create((set) => ({
   guests: [],
-  activeGuestId: "",
-  currentPage: 1,
-  maxPages: 4,
-  startIndex: 0,
-  gPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
-  form1: {
-    gId: "",
-    isFirst: true,
-    isLast: false,
-    pageNum: 1,
-    firstName: "First Name",
-    lastName: "Last Name",
-    mobile: "Mobile Number",
-    email: "Email Address",
-  },
-  form2: {
-    gId: "",
-    isTrue: false,
-    isLast: false,
-    pageNum: 2,
-    nickName: "Nick Name",
-    gender: "Gender",
-    genderPronouns: "Gender Pronouns",
-    birthdate: "Birthdate",
-  },
-  form3: {
-    gId: "",
-    isTrue: false,
-    isLast: false,
-    pageNum: 3,
-    program: "Program",
-    caseManagerName: "Case Manager Full Name",
-    caseManagerMobile: "Case Manager Mobile",
-    caseManagerEmail: "Case Manager Email Address",
-    caseManagerWorkPhone: "Case Manager Work Phone",
-  },
-  form4: {
-    gId: "",
-    isTrue: false,
-    isLast: true,
-    pageNum: 4,
-    emergencyContactName: "Emergency Contact Full Name",
-    emergencyContactMobile: "Emergency Contact Mobile Number",
-    emergencyContactEmail: "Emergency Contact Email Address",
-    emergencyContactWorkPhone: "Emergency Contact Work Phone",
-  },
-  extraInfo: {
-    gId: "",
-    createdDateFrontend: "Created Date Frontend",
-    createdByFrontend: "",
-    lastModifiedDateFrontend: "Last Modified Date Frontend",
-    modifiedByFrontend: "Modified By Frontend",
-  },
-  userNow: "AJ",
-  createGuest: (guest: any) => set(
-    (state: any) => ({
-      guests: [
-        ...state.guests,
-        {
-          gId: self.crypto.randomUUID(),
-          form1: { ...state.page1 },
-          form2: { ...state.page2 },
-          form3: { ...state.page3 },
-          form4: { ...state.page4 },
-          extraInfo: { 
-            createdDateFrontend: Date.now(),
-            createdByFrontend: "AJ",
-            lastModifiedDateFrontend: Date.now(),
-            modifiedByFrontend: "AJ",
-          },
+  startPageIndex: 0,
+  minFormPage: 1,
+  maxFormPage: 4,
+  addGuest: (form1Data: any) => set((state:any) => ({
+    guests: [
+      ...state.guests,
+      {
+        gId: uuidv4(),
+        form1: {form1Data},
+        form2: {},
+        form3: {},
+        form4: {},
+        extraInfo: {
+          createdDateFrontend: Date.now(),
+          createByFrontend: "AJ",
+          lastModifiedDateFrontend: Date.now(),
+          modifiedByFrontend: "AJ",
         }
-      ]
-    })),
-    updateGuest: (id: any) => set((state:any) => ({
-      guests: state.guests.map(((guest: any) => {
-        if(id === guest.id) {
-          return {
-            ...guest,
-            lastModifiedDateFrontend: Date.now(),
-            modifiedByFrontend: "AJ",
-          }
-        } else {
-          return guest
-        }
-      })),
-    })),
-    removeGuest: (id: any) => set((state:any) => ({
-      guests: state.guests.filter((guest:any) => guest.id !== id)
-    })),
-    nextPage: () => set((state: any) => ({
-      currentPage: Math.min(state.currentPage + 1, state.maxPages)
-    } )),
-    prevPage: () => set((state: any) => ({
-      currentPage: Math.max(state.currentPage - 1, 1)
-    })),
-    resetForm: () => set({ currentPage: 1 }),
-    deleteAll: () => set({ guests: [] })
+      }
+    ]
+  })),
+  updateGuest: (guest:any) => set((state:any) => ({
+    guests: state.guests.map(
+      
+    )
+  })),
+  deleteAll: () => set((state: any) => ({ guests: [] })),
 }));
 
 useGuestStore = persist(useGuestStore, {name: "saved-guests"});
