@@ -3,6 +3,7 @@ import { getDiffieHellman, RandomUUIDOptions } from "crypto";
 import { devtools, persist } from "zustand/middleware";
 import { isMatchWith } from "lodash";
 
+
 // note: see typescript string literal types
 type GenderPronouns = "She/Her/Hers" | "He/Him/His" | "They/Them/Theirs" | "Ze/Zir/Zirs";
 
@@ -98,16 +99,14 @@ const guestQuestions = {
 
 const genderPronouns = [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ]
 
-let useGuestStore: any = create((set: any) => ({
+const useGuestStore = create((set: any) => ({
   guests: [],
   activeGuestId: "",
   currentPage: 1,
   maxPages: 4,
-  startIndex: 0,
+  start: 0,
   gPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
-  form1: {
-    gId: "",
-    isFirst: true,
+  page1: {
     isLast: false,
     pageNum: 1,
     firstName: "First Name",
@@ -115,9 +114,7 @@ let useGuestStore: any = create((set: any) => ({
     mobile: "Mobile Number",
     email: "Email Address",
   },
-  form2: {
-    gId: "",
-    isTrue: false,
+  page2: {
     isLast: false,
     pageNum: 2,
     nickName: "Nick Name",
@@ -125,9 +122,7 @@ let useGuestStore: any = create((set: any) => ({
     genderPronouns: "Gender Pronouns",
     birthdate: "Birthdate",
   },
-  form3: {
-    gId: "",
-    isTrue: false,
+  page3: {
     isLast: false,
     pageNum: 3,
     program: "Program",
@@ -136,9 +131,7 @@ let useGuestStore: any = create((set: any) => ({
     caseManagerEmail: "Case Manager Email Address",
     caseManagerWorkPhone: "Case Manager Work Phone",
   },
-  form4: {
-    gId: "",
-    isTrue: false,
+  page4: {
     isLast: true,
     pageNum: 4,
     emergencyContactName: "Emergency Contact Full Name",
@@ -147,23 +140,22 @@ let useGuestStore: any = create((set: any) => ({
     emergencyContactWorkPhone: "Emergency Contact Work Phone",
   },
   extraInfo: {
-    gId: "",
     createdDateFrontend: "Created Date Frontend",
     createdByFrontend: "",
     lastModifiedDateFrontend: "Last Modified Date Frontend",
     modifiedByFrontend: "Modified By Frontend",
   },
   userNow: "AJ",
-  createGuest: (guest: any) => set(
+  addGuest: () => set(
     (state: any) => ({
       guests: [
         ...state.guests,
         {
           gId: self.crypto.randomUUID(),
-          form1: { ...state.page1 },
-          form2: { ...state.page2 },
-          form3: { ...state.page3 },
-          form4: { ...state.page4 },
+          page1: { ...state.page1 },
+          page2: { ...state.page2 },
+          page3: { ...state.page3 },
+          page4: { ...state.page4 },
           extraInfo: { 
             createdDateFrontend: Date.now(),
             createdByFrontend: "AJ",
@@ -180,6 +172,7 @@ let useGuestStore: any = create((set: any) => ({
             ...guest,
             lastModifiedDateFrontend: Date.now(),
             modifiedByFrontend: "AJ",
+            gId: guest.id
           }
         } else {
           return guest
@@ -195,10 +188,7 @@ let useGuestStore: any = create((set: any) => ({
     prevPage: () => set((state: any) => ({
       currentPage: Math.max(state.currentPage - 1, 1)
     })),
-    resetForm: () => set({ currentPage: 1 }),
-    deleteAll: () => set({ guests: [] })
+    resetForm: () => set({ currentPage: 1 })
 }));
-
-useGuestStore = persist(useGuestStore, {name: "saved-guests"});
 
 export default useGuestStore
