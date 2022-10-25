@@ -68,54 +68,44 @@ function App() {
 
   return (
     <>
-      <Home onSubmit={onSubmit} currentStepIndex={currentStepIndex} step={step} 
-      steps={steps} isFirstStep={isFirstStep} back={back} isLastStep={isLastStep}
-      />
+      <Home {...data} updatFields={updateFields} />
     </>
   );
 }
 
-function Home({onSubmit, currentStepIndex, steps, step, isFirstStep, back, isLastStep}:{
-  onSubmit:any,
-  currentStepIndex:any,
-  steps: any,
-  step: any,
-  isFirstStep: boolean,
-  back:any,
-  isLastStep:boolean
-  }) {
+export function Home(props: any) {
   return (
     <div className="container grid">
     <div className="row">
       <div className="twelve columns">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={props.onSubmit}>
           <div className="row">
             <div className="ten columns">
               <span style={{ color: "white" }}>asdlkfjl</span>
             </div>
             <div className="one column">
               <span style={{ color: "black", font: "bold" }}>
-                {currentStepIndex + 1}
+                {props.currentStepIndex + 1}
               </span>{" "}
-              / <span>{steps.length}</span>
+              / <span>{props.steps.length}</span>
             </div>
           </div>
-          {step}
+          {props.step}
           <div className="row">
             <div className="nine columns">
               <span style={{ color: "white" }}>aslfjal</span>
             </div>
             <div>
               <span style={{ margin: "0 0.5rem" }}>
-                {!isFirstStep && (
-                  <button type="button" onClick={back}>
+                {!props.isFirstStep && (
+                  <button type="button" onClick={props.back}>
                     Back
                   </button>
                 )}
               </span>
               <span style={{ margin: "0 0.5rem" }}>
                 <button type="submit">
-                  {isLastStep ? "Finish" : "Next"}
+                  {props.isLastStep ? "Finish" : "Next"}
                 </button>
               </span>
             </div>
