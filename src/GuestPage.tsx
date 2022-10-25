@@ -1,5 +1,5 @@
 import React from 'react'
-import { GuestPageWrapper } from './GuestPageWrapper'
+import { GuestPageWrapper } from './components/layout/GuestPageWrapper'
 
 
 function GuestPage() {
