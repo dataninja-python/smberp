@@ -141,18 +141,17 @@ interface useGuestStoreProps {
 }
 
 let useGuestStore = create<any>((set: any, get: any) => ({
-  guests: [],
+  currentPage: 1,
   minPage: 1,
   maxPage: 4,
-  currentPage: 1,
-  back: () => set((state: any) => ({
+  goBack: () => set((state: any) => ({
     currentPage: Math.max(state.currentPage - 1, state.minPage)
   })),
-  next: () => set((state: any) => ({
+  goNext: () => set((state: any) => ({
     currentPage: Math.min(state.currentPage + 1, state.maxPage)
   })),
 }));
 
-useGuestStore = persist<useGuestStoreProps>(useGuestStore, {name: "saved-guests"});
+//useGuestStore = persist<useGuestStoreProps>(useGuestStore, {name: "saved-guests"});
 
 export default useGuestStore

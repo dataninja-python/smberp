@@ -47,12 +47,14 @@ function App() {
 }
 
 function Counter() {
-  const current = useGuestStore((state: any) => state.currentPage)
-  const maxPages = useGuestStore((state: any) => state.maxPage)
+  //const pageNum = useGuestStore((state: any) => state.currentPage)
+  //const maxPageNum = useGuestStore((state: any) => state.maxPage)
+  const { currentPage, maxPage } = useGuestStore()
+
   return(
     <>
     <div className="form-counter">
-      {current} of {maxPages}
+      {currentPage} of {maxPage}
     </div>    
     </>
   )
@@ -67,8 +69,8 @@ function FormPages() {
 }
 
 function ButtonSection() {
-  const add = useGuestStore((state:any) => state.next)
-  const sub = useGuestStore((state:any) => state.back)
+  const add = useGuestStore((state:any) => state.goBack)
+  const sub = useGuestStore((state:any) => state.Next)
   return (
     <>
     <button onClick={sub}>-</button>
