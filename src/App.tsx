@@ -67,10 +67,12 @@ function FormPages() {
 }
 
 function ButtonSection() {
+  const add = useGuestStore((state:any) => state.next)
+  const sub = useGuestStore((state:any) => state.back)
   return (
     <>
-    <button>-</button>
-    <button>+</button>
+    <button onClick={sub}>-</button>
+    <button onClick={add}>+</button>
     </>
   )
 }
