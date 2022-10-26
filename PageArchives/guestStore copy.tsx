@@ -140,20 +140,76 @@ interface useGuestStoreProps {
   deleteAllGuests: () => void;
 }
 
-let useGuestStore = create<any>((set: any, get: any) => ({
+let useGuestStore = create<useGuestStoreProps>(persist((set, get)=> ({
   guests: [],
-  minPageIndex: 0,
-  minFormPage: 1,
-  maxFormPage: 4,
-  currentFormPage: 1,
-  nextPage: () => set((state: any) => ({
-    CurrentPage: Math.min(state.currentFormPage + 1, state.maxFormPage)
+  labels: formLabels,
+  formNames: ["form1", "form2", "form3", "form4"],
+  extraInfo: [{
+    createdDateFrontend: "", // created once in createGuest
+    createByFrontend: "", // created once in createGuest
+    lastModifiedDateFrontend: "", // changes in every function
+    modifiedByFrontend: "", // changes in every function
+  }],
+  currentPage: 1,
+  minFormPages: 1,
+  maxFormPages: 4,
+  createGuest: () => set((state:any) => ({
+    guests: [
+      ...state.guests,
+      {
+        gId: uuidv4(),
+        form1: {
+          firstName: "",
+          lastName: "",
+          mobile: "",
+          email: "",
+          completed: false,
+        },
+        form2: {
+          nickName: "",
+          gender: "",
+          genderPronouns: "",
+          birthdate: "",
+          completed: false,
+        },
+        form3: {
+          program: "",
+          caseManagerName: "",
+          caseManagerMobile: "",
+          caseManagerEmail: "",
+          caseManagerWorkPhone: "",
+          completed: false,
+        },
+        form4: {
+          emergencyContactName: "",
+          emergencyContactMobile: "",
+          emergencyContactEmail: "",
+          emergencyContactWorkPhone: "",
+          completed: false,
+        },
+        extraInfo: {
+          createdDateFrontend: Date.now(),
+          createByFrontend: "AJ",
+          lastModifiedDateFrontend: Date.now(),
+          modifiedByFrontend: "AJ",
+          completed: false,
+        }
+      }
+    ]
   })),
-  prevPage: () => set((state: any) => ({
-    CurrentPage: Math.max(state.currentFormPage -1, state.minFormPage)
+  next: () => set((state) => ({
+    currentPage: Math.min(state.currentPage + 1, state.maxFormPages)
   })),
-}));
+  back: () => set((state) => ({ currentPage: Math.max(
+    state.currentPage - 1, state.minFormPages
+  ) })),
+  deleteAllGuests: () => set((state: any) => ({ guests: [] })),
+}),
+{
+  name: "guest-store",
+},
+);
 
-useGuestStore = persist<useGuestStoreProps>(useGuestStore, {name: "saved-guests"});
+//useGuestStore = persist<useGuestStoreProps>(useGuestStore, {name: "saved-guests"});
 
 export default useGuestStore
