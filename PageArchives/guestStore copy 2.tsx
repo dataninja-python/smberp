@@ -142,14 +142,15 @@ interface useGuestStoreProps {
 
 let useGuestStore = create<any>((set: any, get: any) => ({
   guests: [],
-  minPage: 1,
-  maxPage: 4,
-  currentPage: 1,
-  back: () => set((state: any) => ({
-    currentPage: Math.max(state.currentPage - 1, state.minPage)
+  minPageIndex: 0,
+  minFormPage: 1,
+  maxFormPages: 4,
+  currentFormPage: 1,
+  nextPage: () => set((state: any) => ({
+    CurrentPage: Math.min(state.currentFormPage + 1, state.maxFormPages)
   })),
-  next: () => set((state: any) => ({
-    currentPage: Math.min(state.currentPage + 1, state.maxPage)
+  prevPage: () => set((state: any) => ({
+    CurrentPage: Math.max(state.currentFormPage -1, state.minFormPage)
   })),
 }));
 

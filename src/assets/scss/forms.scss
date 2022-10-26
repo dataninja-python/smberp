@@ -1,6 +1,23 @@
+.form-center {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid gray;
+    border-radius: 10px !important;
+}
+
+.form-top-room {
+    margin-top: 7%;
+}
+
 .in-grid {
     box-sizing: border-box;
     width: 100%;
     height: auto;
     overflow: auto;
+}
+
+.form-counter {
+    display: flex;
+    border: 1px dotted red;
+    justify-content: flex-end;
 }

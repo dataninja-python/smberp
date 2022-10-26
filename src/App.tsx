@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import useGuestStore from "./store/guestStore";
 import './assets/css/norm.css'
 import './assets/css/base.css'
-
+import './assets/css/forms.css'
 
 
 function App() {
@@ -11,25 +11,49 @@ function App() {
 
   return (
     <>
-    <form>
-      <div>
-        <Counter />
+    <div className="container">
+      <div className="row">
+        <div className="two-half column">
+          <form className="form-center form-top-room">
+            <div className="row">
+              <div className="three columns"><>&nbsp;</></div>
+              <div className="six columns">
+              <>&nbsp;</>
+                </div>
+              <div className="three columns">
+              <Counter />
+              </div>
+            </div>
+            <div className="row">
+            <div className="three columns"><>&nbsp;</></div>
+              <div className="six columns">
+                <FormPages />
+                </div>
+              <div className="three columns"><>&nbsp;</></div>
+            </div>
+            <div className="row">
+            <div className="three columns"><>&nbsp;</></div>
+            <div className="five columns"><>&nbsp;</></div>
+            <div className="four columns">
+              <ButtonSection />
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <div>
-        <FormPages />
-      </div>
-      <div>
-        <ButtonSection />
-      </div>
-    </form>
+    </div>
     </>
   );
 }
 
 function Counter() {
+  const current = useGuestStore((state: any) => state.currentPage)
+  const maxPages = useGuestStore((state: any) => state.maxPage)
   return(
     <>
-    <p>1</p> of <p>X</p>
+    <div className="form-counter">
+      {current} of {maxPages}
+    </div>    
     </>
   )
 }
@@ -45,7 +69,7 @@ function FormPages() {
 function ButtonSection() {
   return (
     <>
-    <button>+</button>
+    <button>-</button>
     <button>+</button>
     </>
   )
