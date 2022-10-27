@@ -5,23 +5,22 @@ import './assets/css/norm.css'
 import './assets/css/base.css'
 import './assets/css/forms.css'
 
-
 function App() {
-  
+  const { currentPage, maxPage, goBack, goNext } = useGuestStore();
 
   return (
     <>
     <div className="container">
       <div className="row">
         <div className="two-half column">
-          <form className="form-center form-top-room">
+          <div className="form-center form-top-room">
             <div className="row">
               <div className="three columns"><>&nbsp;</></div>
               <div className="six columns">
               <>&nbsp;</>
                 </div>
               <div className="three columns">
-              <Counter />
+              <Counter currentPage={currentPage} maxPage={maxPage} />
               </div>
             </div>
             <div className="row">
@@ -35,10 +34,10 @@ function App() {
             <div className="three columns"><>&nbsp;</></div>
             <div className="five columns"><>&nbsp;</></div>
             <div className="four columns">
-              <ButtonSection />
+              <ButtonSection goBack={goBack} goNext={goNext}/>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -46,15 +45,13 @@ function App() {
   );
 }
 
-function Counter() {
+function Counter(props: any) {
   //const pageNum = useGuestStore((state: any) => state.currentPage)
   //const maxPageNum = useGuestStore((state: any) => state.maxPage)
-  const { currentPage, maxPage } = useGuestStore()
-
   return(
     <>
     <div className="form-counter">
-      {currentPage} of {maxPage}
+      {props.currentPage} of {props.maxPage}
     </div>    
     </>
   )
@@ -68,13 +65,13 @@ function FormPages() {
   )
 }
 
-function ButtonSection() {
-  const add = useGuestStore((state:any) => state.goBack)
-  const sub = useGuestStore((state:any) => state.Next)
+function ButtonSection(props: any) {
+  //const add = useGuestStore((state:any) => state.goBack)
+  //const sub = useGuestStore((state:any) => state.Next)
   return (
     <>
-    <button onClick={sub}>-</button>
-    <button onClick={add}>+</button>
+    <button onClick={() => props.sub()}>-</button>
+    <button onClick={() => props.add()}>+</button>
     </>
   )
 }

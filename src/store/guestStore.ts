@@ -144,10 +144,11 @@ let useGuestStore = create<any>((set: any, get: any) => ({
   currentPage: 1,
   minPage: 1,
   maxPage: 4,
-  goBack: () => set((state: any) => ({
+  getCurrentPage: () => { const thePage = get().currentPage },
+  goBack: (state: any) => set((state: any) => ({
     currentPage: Math.max(state.currentPage - 1, state.minPage)
   })),
-  goNext: () => set((state: any) => ({
+  goNext: (state: any) => set((state: any) => ({
     currentPage: Math.min(state.currentPage + 1, state.maxPage)
   })),
 }));

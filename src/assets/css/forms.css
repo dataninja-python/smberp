@@ -2,6 +2,7 @@
   display: block;
   margin: 0 auto;
   border: 1px solid gray;
+  border-radius: 10px !important;
 }
 
 .form-top-room {
@@ -18,6 +19,7 @@
 .form-counter {
   display: flex;
   border: 1px dotted red;
+  justify-content: flex-end;
 }
 
 /*# sourceMappingURL=forms.css.map */
