@@ -8,6 +8,7 @@ const guestStore = (set: any) => ({
   initPageNum: 1,
   maxPageNum: 4,
   currentPage: 1,
+  genderPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
   back: () => set((state: any) => ({
     currentPage: Math.max(state.currentPage - 1, state.initPageNum)
   })),
