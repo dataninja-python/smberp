@@ -6,7 +6,6 @@ import './assets/css/base.css'
 import './assets/css/forms.css'
 
 function App() {
-  const { currentPage, maxPage, goBack, goNext } = useGuestStore();
 
   return (
     <>
@@ -20,13 +19,13 @@ function App() {
               <>&nbsp;</>
                 </div>
               <div className="three columns">
-              <Counter currentPage={currentPage} maxPage={maxPage} />
+                <Counter />
               </div>
             </div>
             <div className="row">
             <div className="three columns"><>&nbsp;</></div>
               <div className="six columns">
-                <FormPages />
+                <p>Hello</p>
                 </div>
               <div className="three columns"><>&nbsp;</></div>
             </div>
@@ -34,7 +33,8 @@ function App() {
             <div className="three columns"><>&nbsp;</></div>
             <div className="five columns"><>&nbsp;</></div>
             <div className="four columns">
-              <ButtonSection goBack={goBack} goNext={goNext}/>
+              <BackButton />
+              <NextButton />
               </div>
             </div>
           </div>
@@ -45,34 +45,31 @@ function App() {
   );
 }
 
-function Counter(props: any) {
-  //const pageNum = useGuestStore((state: any) => state.currentPage)
-  //const maxPageNum = useGuestStore((state: any) => state.maxPage)
-  return(
+function Counter() {
+  const page = useGuestStore((state: any) => state.currentPage)
+  const max = useGuestStore((state: any) => state.maxPageNum);
+  return (
     <>
-    <div className="form-counter">
-      {props.currentPage} of {props.maxPage}
-    </div>    
+    <p>{page} of {max}</p>
     </>
   )
 }
 
-function FormPages() {
+function BackButton() {
+  const back = useGuestStore((state: any) => state.back)
   return (
-    <>
-    <p>Form Page</p>
-    </>
+  <>
+    <button onClick={back}>-</button>
+  </>
   )
 }
 
-function ButtonSection(props: any) {
-  //const add = useGuestStore((state:any) => state.goBack)
-  //const sub = useGuestStore((state:any) => state.Next)
+function NextButton() {
+  const next = useGuestStore((state: any) => state.next)
   return (
-    <>
-    <button onClick={() => props.sub()}>-</button>
-    <button onClick={() => props.add()}>+</button>
-    </>
+  <>
+    <button onClick={next}>-</button>
+  </>
   )
 }
 
