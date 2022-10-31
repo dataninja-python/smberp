@@ -22,4 +22,13 @@
   justify-content: flex-end;
 }
 
+.form-btn {
+  background: inherit;
+}
+
+.form-btn:hover {
+  background: white;
+  color: #33C3F0;
+}
+
 /*# sourceMappingURL=forms.css.map */

@@ -5,25 +5,28 @@ import Guests from "../routes/guests";
 
 const guestStore = (set: any) => ({
   guests: [],
-  initPageNum: 1,
-  maxPageNum: 4,
-  currentPage: 1,
+  initialPageNumber: 1,
+  maximumPageNumber: 4,
+  currentPageNumber: 1,
+  activeGId: "",
+  formNames: ["form1", "form2", "form3", "form4"],
   programs: [ "P1", "P2", "P3", "P4", "P5" ],
   genderPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
   back: () => set((state: any) => ({
-    currentPage: Math.max(state.currentPage - 1, state.initPageNum)
+    currentPageNumber: Math.max(state.currentPageNumber - 1, state.initialPageNumber)
   })),
   next: () => set((state: any) => ({
-    currentPage: Math.min(state.currentPage + 1, state.maxPageNum)
+    currentPageNumber: Math.min(state.currentPageNumber + 1, state.maximumPageNumber)
   })),
   reset: () => set((state: any) => ({
-    page: state.initPageNum,
+    currentPageNumber: state.initialPageNumber,
   })),
-  addGuest: () => set((state: any) => ({
+  createGId: () => { uuidv4()},
+  addGuest: (newGId: any) => set((state: any) => ({
     guests: [
       ...state.guests,
       {
-        gId: uuidv4(),
+        gId: newGId,
         stays: [],
         formNames: ["form1", "form2", "form3", "form4"],
         form1: {
@@ -70,7 +73,11 @@ const guestStore = (set: any) => ({
       if(guest.gId === gId) {
         return {
           ...guest,
-          page: guest.page,
+          extraInfo: {
+            ...guest,
+            lastModifiedDateFrontend: Date.now(),
+            modifiedByFrontend: "AJ",
+          }
         };
       } else {
         return guest;
