@@ -1,14 +1,15 @@
 import create from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { v4 as uuidv4 } from 'uuid';
+import Guests from "../routes/guests";
 
 const guestStore = (set: any) => ({
   guests: [],
-  initialIndex: 0,
   initialPageNumber: 1,
   maximumPageNumber: 4,
   currentPageNumber: 1,
   activeGId: "",
+  formNames: ["form1", "form2", "form3", "form4"],
   programs: [ "P1", "P2", "P3", "P4", "P5" ],
   genderPronouns: [ "She/Her/Hers", "He/Him/His", "They/Them/Theirs", "Ze/Zir/Zirs" ],
   back: () => set((state: any) => ({
@@ -40,27 +41,32 @@ const guestStore = (set: any) => ({
         caseManagerMobile: "",
         caseManagerEmail: "",
         caseManagerWorkPhone: "",
-        emergencyContactFirstName: "",
-        emergencyContactLastName: "",
+        emergencyContactName: "",
         emergencyContactMobile: "",
-        emergencyContactWorkPhone: "",
         emergencyContactEmail: "",
+        emergencyContactWorkPhone: "",
         createdDateFrontend: Date.now(),
         lastModifiedDateFrontend: Date.now(),
       }
     ]
   })),
-  updateGuest: (gId: any, data: any) => set((state: any) => ({
+  updateGuest: (gId: any) => set((state: any) => ({
     guests: state.guests.map((guest:any) => {
       if(guest.gId === gId) {
         return {
-          ...data, lastModifiedDateFrontend: Date.now(),
-          };
+          ...guest,
+          extraInfo: {
+            ...guest.extraInfo,
+            lastModifiedDateFrontend: Date.now(),
+            modifiedByFrontend: "AJ",
+          }
+        };
       } else {
         return guest;
       };
     })
-  })),
+  })
+  ),
   removeGuest: (gId:any) => set((state:any) => ({
     guests: state.guests.filter((guest:any) => guest.gId !== gId)
   })),

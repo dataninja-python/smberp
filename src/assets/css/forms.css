@@ -17,18 +17,18 @@
 }
 
 .form-counter {
-  display: flex;
-  border: 1px dotted red;
-  justify-content: flex-end;
+  box-sizing: border-box;
+  margin-top: 10px;
 }
 
 .form-btn {
-  background: inherit;
+  background: lightgreen;
+  margin: 2%;
 }
 
 .form-btn:hover {
   background: white;
-  color: #33C3F0;
+  color: black;
 }
 
 /*# sourceMappingURL=forms.css.map */
