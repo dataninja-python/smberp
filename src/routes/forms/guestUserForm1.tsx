@@ -9,12 +9,10 @@ import '../../assets/css/forms.css'
 //import BackBtn from './components/backBtn';
 //import NextBtn from './components/nextBtn';
 
-import GuestForm1 from './sub-forms/form1'
-import GuestForm2 from './sub-forms/form2'
-import GuestForm3 from './sub-forms/form3'
-import GuestForm4 from './sub-forms/form4'
-
-
+//import GuestForm1 from './sub-forms/form1'
+//import GuestForm2 from './sub-forms/form2'
+//import GuestForm3 from './sub-forms/form3'
+//import GuestForm4 from './sub-forms/form4'
 
 export default function GuestUserForm1() {
   const initPage = useGuestStore((state:any) => state.initialPageNumber);
@@ -46,31 +44,29 @@ export default function GuestUserForm1() {
 
   return (
     <>
-    <div className="container">
-      <div className="row">
-        <div className="two-half column">
-          <div className="form-center form-top-room">
-            <div className="row">
-              <div className="two columns"><>&nbsp;</></div>
-              <div className="six columns">
-              <>&nbsp;</>
-                </div>
-              <div className="two columns">
-                <div className="form-counter">{page} of {maxPage}</div>
+      <div className="container">
+        <div className="row">
+          <div className="two-half column">
+            <div className="form-center form-top-room">
+              <div className="row">
+                <div className="two columns"><>&nbsp;</></div>
+                <div className="six columns"><>&nbsp;</></div>
+                <div className="two columns">
+                  <div className="form-counter">{page} of {maxPage}</div>
               </div>
             </div>
             <div className="row">
-            <div className="two columns"><>&nbsp;</></div>
+              <div className="two columns"><>&nbsp;</></div>
               <div className="eight columns">
-              <div className='row'>
-                    <div className='four columns'>
+                <div className='row'>
+                      <div className='four columns'>
                         <label>First Name</label>
                         <input className='u-full-width' type="text" placeholder='first' onChange={handleChange}/>
-                    </div>
-                    <div className='four columns'>
+                      </div>
+                      <div className='four columns'>
                         <label>Last Name</label>
                         <input className='u-full-width' type="text" placeholder='Last' onChange={handleChange} />
-                    </div>
+                      </div>
                 </div>
                 <div className='row'>
                     <div className='four columns'>
@@ -81,22 +77,22 @@ export default function GuestUserForm1() {
                         <label>Email Address</label>
                         <input className='u-full-width' type="email" placeholder='Email' onChange={handleChange} />
                     </div>
+                  </div>
                 </div>
-                </div>
+                <div className="two columns"><>&nbsp;</></div>
+              </div>
+              <div className="row">
               <div className="two columns"><>&nbsp;</></div>
-            </div>
-            <div className="row">
-            <div className="two columns"><>&nbsp;</></div>
-            <div className="three columns"><>&nbsp;</></div>
-            <div className="six columns">
-             {page === initPage ? <button disabled>back</button> : <button className="form-btn" onClick={handleBack}>back</button>}
-             {page === maxPage ? <button disabled>next</button> : <button className="form-btn" onClick={handleNext}>next</button>}
-            </div>
+              <div className="three columns"><>&nbsp;</></div>
+              <div className="six columns">
+              {page === initPage ? <button disabled>back</button> : <button className="form-btn" onClick={handleBack}>back</button>}
+              {page === maxPage ? <button disabled>next</button> : <button className="form-btn" onClick={handleNext}>next</button>}
+              </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
