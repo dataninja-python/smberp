@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
-import GuestUserForm1 from "./routes/forms/guestUserForm1";
+import GuestForm1 from "./routes/GuestForm1";
 
 export default function App() {
   return (
@@ -21,6 +21,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="guestform1" element={<GuestForm1 />} />
           <Route path="about" element={<About />} />
           <Route path="dashboard" element={<Dashboard />} />
 
@@ -43,6 +44,9 @@ function Layout() {
         <ul>
           <li>
             <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/guestform1">GuestForm1</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
