@@ -2,7 +2,7 @@ import '../assets/css/norm.css'
 import '../assets/css/base.css'
 
 
-export default function GuestForm1() {
+export default function GuestFormBasics() {
     return (
         <>
             <form>

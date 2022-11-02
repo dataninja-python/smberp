@@ -21,11 +21,11 @@ const guestStore = (set: any) => ({
     currentPageNumber: state.initialPageNumber,
   })),
   createGId: () => {uuidv4()},
-  addGuest: (newGId: any) => set((state: any) => ({
+  addNewGuest: () => set((state: any) => ({
     guests: [
       ...state.guests,
       {
-        gId: newGId,
+        gId: state.createGId(),
         stays: [],
         firstName: "",
         lastName: "",
@@ -63,9 +63,6 @@ const guestStore = (set: any) => ({
   })),
   removeGuest: (gId:any) => set((state:any) => ({
     guests: state.guests.filter((guest:any) => guest.gId !== gId)
-  })),
-  setActiveId: (gId:any) => set((state:any) => ({
-    activeGID: gId, 
   }))
 });
 
